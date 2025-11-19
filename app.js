@@ -41,6 +41,10 @@ connectDB().catch(err => {
   console.error('[App] Continuing without an active MongoDB connection:', err.message);
 });
 
+// When running behind a proxy (e.g., Render, Heroku, Vercel), enable trust proxy
+// so secure cookies and client IPs work correctly. This only applies in production.
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+
 app.use(logger('dev'));
 // Increase payload size limit to 10MB
 app.use(express.json({ limit: '10mb' }));
@@ -54,7 +58,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false, // set to true if behind HTTPS proxy
+    secure: process.env.NODE_ENV === 'production', // secure cookies in production
     sameSite: 'lax',
     maxAge: 1000 * 60 * 60 * 8 // 8 hours
   }
