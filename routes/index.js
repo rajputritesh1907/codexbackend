@@ -403,8 +403,11 @@ process.on('SIGTERM', () => {
 });
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function (req, res) {
+  res.json({
+    success: true,
+    message: 'Backend is running 🚀'
+  });
 });
 
 const secret = "secret"; // secret key for jwt
