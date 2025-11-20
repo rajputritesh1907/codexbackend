@@ -74,8 +74,7 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
-    process.env.FRONTEND_URL,
-    'https://your-frontend-domain.vercel.app'
+    process.env.FRONTEND_URL
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -130,12 +129,12 @@ app.post('/api/upload-image', upload.single('image'), async (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // Return JSON error for API
   res.status(err.status || 500);
   res.json({
